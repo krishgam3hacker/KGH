@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WatchFace width="480" height="480">
+  <Metadata key="CLOCK_TYPE" value="DIGITAL"/>
+  <Metadata key="PREVIEW_TIME" value="10:10:00"/>
+  <Scene backgroundColor="#FF000000">
+    <Group name="ticks" x="0" y="0" width="480" height="480">
+      <Variant mode="AMBIENT" target="alpha" value="0"/>
+      <PartDraw name="ticks_gray" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="448" height="448" startAngle="-0.384" endAngle="359.616" direction="CLOCKWISE">
+          <Stroke color="#4A4A4A" thickness="13" cap="BUTT" dashIntervals="3 20.457"/>
+        </Arc>
+      </PartDraw>
+      <PartDraw name="ticks_orange" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="448" height="448" startAngle="-0.384" endAngle="359.616" direction="CLOCKWISE">
+          <Transform target="endAngle" value="-0.384 + [SECOND]*6 + 2"/>
+          <Stroke color="#FF7A1A" thickness="13" cap="BUTT" dashIntervals="3 20.457"/>
+        </Arc>
+      </PartDraw>
+      <Group name="sec_marker" x="0" y="0" width="480" height="480" pivotX="0.5" pivotY="0.5">
+        <Transform target="angle" value="[SECOND]*6"/>
+        <PartDraw x="0" y="0" width="480" height="480">
+          <RoundRectangle x="237" y="4" width="6" height="26" cornerRadiusX="3" cornerRadiusY="3">
+            <Fill color="#FFFFFF"/>
+          </RoundRectangle>
+        </PartDraw>
+      </Group>
+      <PartDraw name="dot9" x="0" y="0" width="480" height="480">
+        <Ellipse x="5" y="232" width="16" height="16">
+          <Fill color="#FF7A1A"/>
+        </Ellipse>
+      </PartDraw>
+    </Group>
+    <Group name="battery" x="0" y="0" width="480" height="480">
+      <Variant mode="AMBIENT" target="alpha" value="0"/>
+      <PartDraw name="batt_track" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="400" height="400" startAngle="-45" endAngle="45" direction="CLOCKWISE">
+          <Stroke color="#06362A" thickness="12" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <PartDraw name="batt_fill" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="400" height="400" startAngle="-45" endAngle="45" direction="CLOCKWISE">
+          <Transform target="endAngle" value="-45 + 90*[BATTERY_PERCENT]/100"/>
+          <Stroke color="#00F5A0" thickness="12" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <Group name="shimmer" x="0" y="0" width="480" height="480">
+        <Transform target="alpha" value="clamp([BATTERY_CHARGING_STATUS]*255,0,255)"/>
+        <PartDraw name="shimmer_arc" x="0" y="0" width="480" height="480">
+          <Arc centerX="240" centerY="240" width="400" height="400" startAngle="0" endAngle="14" direction="CLOCKWISE">
+            <Transform target="startAngle" value="-45 + fract([SECOND_MILLISECOND]/2500)*clamp(90*[BATTERY_PERCENT]/100-14,0,90)"/>
+            <Transform target="endAngle" value="-45 + fract([SECOND_MILLISECOND]/2500)*clamp(90*[BATTERY_PERCENT]/100-14,0,90) + 14"/>
+            <Stroke color="#C9FFE9" thickness="12" cap="ROUND"/>
+          </Arc>
+        </PartDraw>
+      </Group>
+      <PartDraw name="bolt_bg" x="0" y="0" width="480" height="480">
+        <Ellipse x="216" y="13" width="48" height="48">
+          <Fill color="#1B1B1B"/>
+        </Ellipse>
+      </PartDraw>
+      <PartDraw name="bolt_ring" x="0" y="0" width="480" height="480">
+        <Ellipse x="216" y="13" width="48" height="48">
+          <Stroke color="#555555" thickness="2"/>
+        </Ellipse>
+      </PartDraw>
+      <PartImage name="bolt" x="228" y="21" width="24" height="32">
+        <Image resource="bolt"/>
+      </PartImage>
+      <PartText name="batt_pct" x="140" y="62" width="200" height="30">
+        <Text align="CENTER">
+          <Font family="space_mono_bold" size="22" color="#00F5A0">
+            <Template>%d%%<Parameter expression="[BATTERY_PERCENT]"/></Template>
+          </Font>
+        </Text>
+      </PartText>
+      <PartText name="batt_state_on" x="140" y="90" width="200" height="20">
+        <Transform target="alpha" value="clamp([BATTERY_CHARGING_STATUS]*255,0,255)"/>
+        <Text align="CENTER">
+          <Font family="space_mono_bold" size="13" color="#00F5A0" letterSpacing="1">
+            CHARGING
+          </Font>
+        </Text>
+      </PartText>
+      <PartText name="batt_state_off" x="140" y="90" width="200" height="20">
+        <Transform target="alpha" value="255-clamp([BATTERY_CHARGING_STATUS]*255,0,255)"/>
+        <Text align="CENTER">
+          <Font family="space_mono_bold" size="13" color="#7FD9B8" letterSpacing="1">
+            BATTERY
+          </Font>
+        </Text>
+      </PartText>
+    </Group>
+    <Group name="heart" x="0" y="0" width="480" height="480">
+      <Variant mode="AMBIENT" target="alpha" value="0"/>
+      <PartDraw name="hr_track" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="410" height="410" startAngle="22" endAngle="152" direction="CLOCKWISE">
+          <Stroke color="#3B1226" thickness="12" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <PartDraw name="hr_fill" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="410" height="410" startAngle="22" endAngle="152" direction="CLOCKWISE">
+          <Transform target="startAngle" value="152 - 130*clamp(([HEART_RATE]-40)/140,0.04,1)"/>
+          <Stroke color="#FF2D46" thickness="12" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <PartDraw name="heart_icon" x="0" y="0" width="480" height="480">
+        <Ellipse x="381" y="142" width="9" height="9"><Fill color="#FF2D46"/></Ellipse>
+        <Ellipse x="388" y="142" width="9" height="9"><Fill color="#FF2D46"/></Ellipse>
+        <RoundRectangle x="382" y="147" width="14" height="9" cornerRadiusX="3" cornerRadiusY="3"><Fill color="#FF2D46"/></RoundRectangle>
+      </PartDraw>
+      <PartText name="hr_text" x="0" y="0" width="480" height="480">
+        <TextCircular centerX="240" centerY="240" width="336" height="336" startAngle="112" endAngle="62" direction="COUNTER_CLOCKWISE" align="CENTER">
+          <Font family="space_mono_bold" size="17" color="#FF2D46">
+            <Template>%d BPM<Parameter expression="[HEART_RATE]"/></Template>
+          </Font>
+        </TextCircular>
+      </PartText>
+    </Group>
+    <Group name="left" x="0" y="0" width="480" height="480">
+      <Variant mode="AMBIENT" target="alpha" value="0"/>
+      <PartDraw name="left_track0" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="410" height="410" startAngle="247" endAngle="312" direction="CLOCKWISE">
+          <Stroke color="#2A2D14" thickness="5" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <PartDraw name="left_track1" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="394" height="394" startAngle="247" endAngle="312" direction="CLOCKWISE">
+          <Stroke color="#3A1230" thickness="5" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <PartDraw name="left_track2" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="378" height="378" startAngle="247" endAngle="312" direction="CLOCKWISE">
+          <Stroke color="#0E2A24" thickness="5" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <PartDraw name="steps_fill" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="410" height="410" startAngle="247" endAngle="312" direction="CLOCKWISE">
+          <Transform target="startAngle" value="247"/>
+          <Transform target="endAngle" value="247 + 65*clamp([STEP_PERCENT]/100,0.03,1)"/>
+          <Stroke color="#26D07C" thickness="5" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <PartText name="kcal_txt" x="0" y="0" width="480" height="480">
+        <TextCircular centerX="240" centerY="240" width="336" height="336" startAngle="285" endAngle="308" direction="CLOCKWISE" align="CENTER">
+          <Font family="space_mono_bold" size="13" color="#FF5FA8">
+            KCAL
+          </Font>
+        </TextCircular>
+      </PartText>
+      <PartText name="steps_txt" x="0" y="0" width="480" height="480">
+        <TextCircular centerX="240" centerY="240" width="336" height="336" startAngle="262" endAngle="284" direction="CLOCKWISE" align="CENTER">
+          <Font family="space_mono_bold" size="13" color="#26D07C">
+            <Template>%d STEPS<Parameter expression="[STEP_COUNT]"/></Template>
+          </Font>
+        </TextCircular>
+      </PartText>
+    </Group>
+    <Group name="sleep" x="0" y="0" width="480" height="480">
+      <Variant mode="AMBIENT" target="alpha" value="0"/>
+      <PartDraw name="sleep_arc" x="0" y="0" width="480" height="480">
+        <Arc centerX="240" centerY="240" width="390" height="390" startAngle="130" endAngle="230" direction="CLOCKWISE">
+          <Stroke color="#2CCF9A" thickness="14" cap="ROUND"/>
+        </Arc>
+      </PartDraw>
+      <PartText name="sleep_txt" x="0" y="0" width="480" height="480">
+        <TextCircular centerX="240" centerY="240" width="336" height="336" startAngle="212" endAngle="148" direction="COUNTER_CLOCKWISE" align="CENTER">
+          <Font family="space_mono_bold" size="15" color="#2CCF9A" letterSpacing="1">
+            SLEEP
+          </Font>
+        </TextCircular>
+      </PartText>
+    </Group>
+      <PartText name="date" x="90" y="118" width="300" height="30">
+        <Text align="CENTER">
+          <Font family="space_mono_bold" size="21" color="#FFFFFF" letterSpacing="2">
+            <Upper><Template>%s %d %s<Parameter expression="[DAY_OF_WEEK_S]"/><Parameter expression="[DAY]"/><Parameter expression="[MONTH_S]"/></Template></Upper>
+          </Font>
+        </Text>
+      </PartText>
+    <DigitalClock x="60" y="150" width="360" height="120">
+      <TimeText format="h:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER" x="0" y="0" width="360" height="120">
+        <Font family="space_grotesk_bold" size="96" color="#FFFFFF"/>
+      </TimeText>
+    </DigitalClock>
+    <PartDraw name="ring1" x="0" y="0" width="480" height="480">
+      <Ellipse x="111" y="299" width="76" height="76">
+        <Stroke color="#10304A" thickness="6"/>
+      </Ellipse>
+    </PartDraw>
+    <ComplicationSlot slotId="1" name="slot1" displayName="Left (Spotify)" x="113" y="301" width="72" height="72" supportedTypes="SHORT_TEXT SMALL_IMAGE MONOCHROMATIC_IMAGE" isCustomizable="TRUE">
+      <DefaultProviderPolicy defaultSystemProvider="APP_SHORTCUT" defaultSystemProviderType="SMALL_IMAGE"/>
+      <BoundingOval x="0" y="0" width="72" height="72"/>
+      <Complication type="SHORT_TEXT">
+        <PartText x="0" y="12" width="72" height="28"><Text align="CENTER">
+          <Font family="space_mono_bold" size="19" color="#FFFFFF">
+            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+          </Font>
+        </Text></PartText>
+        <PartText x="0" y="38" width="72" height="20"><Text align="CENTER">
+          <Font family="space_mono_bold" size="12" color="#E6E6E6">
+            <Template>%s<Parameter expression="[COMPLICATION.TITLE]"/></Template>
+          </Font>
+        </Text></PartText>
+      </Complication>
+      <Complication type="SMALL_IMAGE">
+        <PartImage x="6" y="6" width="60" height="60"><Image resource="[COMPLICATION.SMALL_IMAGE]"/></PartImage>
+      </Complication>
+      <Complication type="MONOCHROMATIC_IMAGE">
+        <PartImage x="14" y="14" width="44" height="44" tintColor="#FFFFFF"><Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/></PartImage>
+      </Complication>
+    </ComplicationSlot>
+    <PartDraw name="ring2" x="0" y="0" width="480" height="480">
+      <Ellipse x="202" y="299" width="76" height="76">
+        <Stroke color="#FFC400" thickness="6"/>
+      </Ellipse>
+    </PartDraw>
+    <ComplicationSlot slotId="2" name="slot2" displayName="Middle (Weather)" x="204" y="301" width="72" height="72" supportedTypes="SHORT_TEXT SMALL_IMAGE MONOCHROMATIC_IMAGE" isCustomizable="TRUE">
+      <DefaultProviderPolicy defaultSystemProvider="SUNRISE_SUNSET" defaultSystemProviderType="SHORT_TEXT"/>
+      <BoundingOval x="0" y="0" width="72" height="72"/>
+      <Complication type="SHORT_TEXT">
+        <PartText x="0" y="12" width="72" height="28"><Text align="CENTER">
+          <Font family="space_mono_bold" size="19" color="#FFFFFF">
+            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+          </Font>
+        </Text></PartText>
+        <PartText x="0" y="38" width="72" height="20"><Text align="CENTER">
+          <Font family="space_mono_bold" size="12" color="#E6E6E6">
+            <Template>%s<Parameter expression="[COMPLICATION.TITLE]"/></Template>
+          </Font>
+        </Text></PartText>
+      </Complication>
+      <Complication type="SMALL_IMAGE">
+        <PartImage x="6" y="6" width="60" height="60"><Image resource="[COMPLICATION.SMALL_IMAGE]"/></PartImage>
+      </Complication>
+      <Complication type="MONOCHROMATIC_IMAGE">
+        <PartImage x="14" y="14" width="44" height="44" tintColor="#FFFFFF"><Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/></PartImage>
+      </Complication>
+    </ComplicationSlot>
+    <PartDraw name="ring3" x="0" y="0" width="480" height="480">
+      <Ellipse x="293" y="299" width="76" height="76">
+        <Stroke color="#4A3C00" thickness="6"/>
+      </Ellipse>
+    </PartDraw>
+    <ComplicationSlot slotId="3" name="slot3" displayName="Right (Buds)" x="295" y="301" width="72" height="72" supportedTypes="SHORT_TEXT SMALL_IMAGE MONOCHROMATIC_IMAGE" isCustomizable="TRUE">
+      <DefaultProviderPolicy defaultSystemProvider="APP_SHORTCUT" defaultSystemProviderType="SMALL_IMAGE"/>
+      <BoundingOval x="0" y="0" width="72" height="72"/>
+      <Complication type="SHORT_TEXT">
+        <PartText x="0" y="12" width="72" height="28"><Text align="CENTER">
+          <Font family="space_mono_bold" size="19" color="#FFFFFF">
+            <Template>%s<Parameter expression="[COMPLICATION.TEXT]"/></Template>
+          </Font>
+        </Text></PartText>
+        <PartText x="0" y="38" width="72" height="20"><Text align="CENTER">
+          <Font family="space_mono_bold" size="12" color="#E6E6E6">
+            <Template>%s<Parameter expression="[COMPLICATION.TITLE]"/></Template>
+          </Font>
+        </Text></PartText>
+      </Complication>
+      <Complication type="SMALL_IMAGE">
+        <PartImage x="6" y="6" width="60" height="60"><Image resource="[COMPLICATION.SMALL_IMAGE]"/></PartImage>
+      </Complication>
+      <Complication type="MONOCHROMATIC_IMAGE">
+        <PartImage x="14" y="14" width="44" height="44" tintColor="#FFFFFF"><Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]"/></PartImage>
+      </Complication>
+    </ComplicationSlot>
+  </Scene>
+</WatchFace>
